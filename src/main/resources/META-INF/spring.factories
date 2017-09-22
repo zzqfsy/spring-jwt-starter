@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.jwt.starter.configuration.BootConfiguration,\
+com.jwt.starter.configuration.WebSecurityConfig
