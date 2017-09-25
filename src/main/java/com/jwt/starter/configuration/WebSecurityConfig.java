@@ -4,8 +4,11 @@ import com.jwt.starter.filter.JwtAuthenticationTokenFilter;
 import com.jwt.starter.processor.DefaultRolesPrefixPostProcessor;
 import com.jwt.starter.properties.RequestMatchersProperties;
 import com.jwt.starter.security.exception.JwtAuthenticationEntryPoint;
+import com.jwt.starter.security.service.JwtUserRulesService;
 import com.jwt.starter.utils.PHPMD5PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,12 +29,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@ConditionalOnClass({JwtUserRulesService.class})
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
+    @Qualifier("userDetailsService")
     private UserDetailsService userDetailsService;
 
     @Autowired
